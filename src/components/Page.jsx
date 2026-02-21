@@ -3,7 +3,7 @@ import { StoryblokComponent } from '@storyblok/react/rsc';
 import { storyblokEditable, StoryblokServerComponent } from '@storyblok/react/rsc';
 
 const Page = ({ blok }) => (
-	<main>
+	<main {...storyblokEditable(blok)}>
 		{blok.block?.map((nestedBlok) => (
 			<StoryblokServerComponent blok={nestedBlok} key={nestedBlok._uid} />
 		))}
