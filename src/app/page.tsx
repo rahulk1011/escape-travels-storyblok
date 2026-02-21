@@ -1,5 +1,5 @@
 import { getStoryblokApi } from "../lib/storyblok";
-import { StoryblokStory } from "@storyblok/react/rsc";
+import { StoryblokServerComponent } from "@storyblok/react/rsc";
 
 const fetchHomePage = async () => {
   const client = getStoryblokApi();
@@ -13,7 +13,7 @@ const fetchHomePage = async () => {
 
 const HomePage = async () => {
   const story = await fetchHomePage();
-  return <StoryblokStory story={story} />;
+  return <StoryblokServerComponent blok={story.content} key={story.content._uid} />;
 };
 
 export default HomePage;
