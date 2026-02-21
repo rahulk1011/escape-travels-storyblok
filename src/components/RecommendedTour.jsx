@@ -3,7 +3,7 @@ import Link from "next/link";
 export const RecommendedTour = (props) => {
   return (
     <div className="bg-white rounded-sm shadow">
-      <img className="aspect-video object-cover w-full" src={props.story.content.main_image.filename} />
+      <img className="aspect-video object-cover w-full" src={props.story.content.main_image.filename} alt={props.story.content.main_image?.alt || props.story.content.name} />
       <div className="p-8">
         <div className="flex gap-4 justify-between text-lg font-bold">
           <h3>{props.story.content.name}</h3>

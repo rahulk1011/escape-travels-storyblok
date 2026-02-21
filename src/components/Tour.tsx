@@ -3,7 +3,7 @@ import { storyblokEditable, StoryblokServerRichText } from '@storyblok/react/rsc
 
 const Tour = (props: any) => {
   return (
-    <main className="tour-page-main container mx-auto px-4 w-full pt-32 pb-16">
+    <main {...storyblokEditable(props.blok)} className="tour-page-main container mx-auto px-4 w-full pt-32 pb-16">
       <h1 className='text-3xl md:text-5xl font-bold'>
         {props.blok.name}
       </h1>
