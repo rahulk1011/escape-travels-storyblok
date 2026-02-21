@@ -4,7 +4,7 @@ import { storyblokEditable, StoryblokServerComponent } from '@storyblok/react/rs
 
 const Grid = ({ blok }) => {
 	return (
-		<div className="grid-main bg-blue-100 py-16">
+		<div {...storyblokEditable(blok)} className="grid-main bg-blue-100 py-16">
 			<div className='container mx-auto w-full px-4'>
 				<h2 className='text-3xl md:text-4xl font-bold'>{blok.headline}</h2>
 				<div className='grid md:grid-flow-col auto-cols-fe mt-12 gap-8'>
