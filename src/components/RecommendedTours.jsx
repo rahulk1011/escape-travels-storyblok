@@ -3,7 +3,6 @@ import { RecommendedTour } from "./RecommendedTour";
 import { storyblokEditable } from '@storyblok/react/rsc';
 
 const RecommendedTours = (params) => {
-  console.log(params);
   return (
     <div {...storyblokEditable(params.blok)} className="recommended-tours-main py-16 container mx-auto w-full px-4">
       <h2 className="text-3xl md:text-4xl font-bold text-center">
