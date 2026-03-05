@@ -1,5 +1,6 @@
 import Page from "../components/Page";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import Feature from "../components/Feature";
 import Grid from "../components/Grid";
 import Teaser from "../components/Teaser";
@@ -27,6 +28,7 @@ export const getStoryblokApi = storyblokInit({
 	components: {
 		page: Page,
 		header: Header,
+		footer: Footer,
 		feature: Feature,
 		grid: Grid,
 		teaser: Teaser,
