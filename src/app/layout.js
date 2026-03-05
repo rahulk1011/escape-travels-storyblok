@@ -1,8 +1,14 @@
 import './globals.css';
 import StoryblokProvider from '../components/StoryblokProvider';
-import Link from 'next/link';
-import Image from 'next/image';
-import siteLogo from "../assets/around-the-globe.png";
+import { Amarante } from 'next/font/google';
+import Header from '../components/Header';
+
+const amarante = Amarante({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-amarante',
+  weight: ['400']
+});
 
 export const metadata = {
   title: 'Escape Travels',
@@ -14,17 +20,9 @@ export default function RootLayout({ children }) {
 
 	return (
 		<StoryblokProvider>
-			<html lang="en">
+			<html lang="en" className={`${amarante.variable}`}>
 				<body className='bg-blue-50'>
-					<header className='main-navigation bg-slate-800 pt-4 pb-4 pl-8 pr-8 flex'>
-						<div className='header-wrapper container'>
-							<Image src={siteLogo} alt='travelling site logo' className='img-logo' />
-							<nav className='nav-links'>
-								<Link className='text-xl font-sans font-bold text-sky-50' href={"/"}>Home</Link>
-								<Link className='text-xl font-sans font-bold text-sky-50' href={"/tours"}>Tours</Link>
-							</nav>
-						</div>
-					</header>
+					<Header />
 					{children}
 					<footer className='p-4 bg-olive-800 flex'>
 						<p className='text-xs font-semibold font-sans text-amber-50 mx-auto'>@Rahul Khan, <span suppressHydrationWarning>{currentYear}</span> - StoryBlok & NextJS</p>

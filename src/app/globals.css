@@ -1,26 +1,40 @@
-/* @import 'https://a.storyblok.com/f/212319/x/e6ccda03b8/blueprint-blank.css'; */
-/* ./app/globals.css or ./styles/globals.css */
 @import "tailwindcss";
 
-.main-navigation .header-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1440px;
-  margin: 0 auto;
+html {
+  font-family: var(--font-amarante);
 }
 
-.main-navigation .header-wrapper nav a {
-  margin: 0 96px;
+.slider-wrapper .custom-swiper-slider .swiper-button-prev,
+.slider-wrapper .custom-swiper-slider .swiper-button-next {
+  background: #0C0A09;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+  top: 47%;
 }
 
-.main-navigation .header-wrapper nav a:hover {
-  color: #fee685;
+.slider-wrapper .custom-swiper-slider .swiper-button-prev:hover,
+.slider-wrapper .custom-swiper-slider .swiper-button-next:hover {
+  background: #881337;
 }
 
-.main-navigation .header-wrapper nav a:last-child {
-  margin: 0;
+.slider-wrapper .custom-swiper-slider .swiper-button-prev::after {
+  content: url(../assets/slide-prev-48.png);
+  height: 48px;
+  width: 48px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.slider-wrapper .custom-swiper-slider .swiper-button-next::after {
+  content: url(../assets/slide-next-48.png);
+  height: 48px;
+  width: 48px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .slider-wrapper .custom-swiper-slider .swiper-wrapper .swiper-slide p {
@@ -77,11 +91,5 @@
   .tour-page-main .tour-body-main .image-container,
   .tour-page-main .tour-body-main .content-container {
     width: 100%;
-  }
-}
-
-@media (max-width: 425px) {
-  .main-navigation .header-wrapper nav a {
-    margin: 0 32px;
   }
 }
