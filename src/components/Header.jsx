@@ -37,8 +37,11 @@ export default function Header() {
           <Link className='text-xl font-bold text-sky-50 mb-4 lg:mb-0 lg:mr-16' href="/" onClick={() => setIsOpen(false)}>
             Home
           </Link>
-          <Link className='text-xl font-bold text-sky-50' href="/tours" onClick={() => setIsOpen(false)}>
+          <Link className='text-xl font-bold text-sky-50 mb-4 lg:mb-0 lg:mr-16' href="/tours" onClick={() => setIsOpen(false)}>
             Tours
+          </Link>
+          <Link className='text-xl font-bold text-sky-50' href="/contact-us" onClick={() => setIsOpen(false)}>
+            Contact Us
           </Link>
         </nav>
       </div>

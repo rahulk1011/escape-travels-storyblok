@@ -1,10 +1,9 @@
-'use client';
-
+"use client";
 import { storyblokEditable } from '@storyblok/react';
 import { useState } from 'react';
 
 export default function ContactForm({ blok }) {
-	const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({});
 	const [submitted, setSubmitted] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -17,11 +16,10 @@ export default function ContactForm({ blok }) {
 			setFormData({ ...formData, [name]: numericValue });
 			return;
 		}
-
 		setFormData({ ...formData, [name]: value });
 	};
 
-	const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 
@@ -30,7 +28,6 @@ export default function ContactForm({ blok }) {
 				method: 'POST',
 				body: JSON.stringify(formData),
 			});
-
 			setSubmitted(true);
 		} catch (error) {
 			console.error('Form submit error:', error);
@@ -45,106 +42,26 @@ export default function ContactForm({ blok }) {
 		}, 3000);
 	};
 
-	return (
-		<section {...storyblokEditable(blok)} className="contact-section">
-			{' '}
-			<div className="contact-container">
-				<div className="contact-header">
-					<h2>{blok.title}</h2>
-					<p>{blok.description}</p>
-				</div>
-
-				{submitted && (
-					<div className="contact-success">
-						{blok.success_message || '✔ Message sent successfully'}
-					</div>
-				)}
-
-				<form onSubmit={handleSubmit} className="contact-form">
-					{blok.fields?.map((field) => {
-						const isRequired = field.name === 'name' || field.name === 'email';
-
-						if (field.type === 'textarea') {
-							return (
-								<div key={field._uid} className="form-group">
-									<label>
-										{field.label}
-										{isRequired && <span className="required">*</span>}
-									</label>
-
-									<textarea
-										name={field.name}
-										placeholder={field.placeholder || field.label}
-										onChange={handleChange}
-										required={isRequired}
-									/>
-								</div>
-							);
-						}
-
-						if (field.name === 'phone') {
-							return (
-								<div key={field._uid} className="form-group">
-									<label>{field.label}</label>
-
-									<input
-										type="tel"
-										name="phone"
-										value={formData.phone || ''}
-										placeholder="Enter 10 digit mobile number"
-										pattern="^[6-9]\d{9}$"
-										inputMode="numeric"
-										onChange={handleChange}
-										title="Enter valid 10 digit mobile number starting with 6-9"
-									/>
-								</div>
-							);
-						}
-
-						if (field.name === 'email') {
-							return (
-								<div key={field._uid} className="form-group">
-									<label>
-										{field.label}
-										<span className="required">*</span>
-									</label>
-
-									<input
-										type="email"
-										name="email"
-										placeholder="example@email.com"
-										required
-										pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
-										onChange={handleChange}
-										title="Enter a valid email address"
-									/>
-								</div>
-							);
-						}
-
-						return (
-							<div key={field._uid} className="form-group">
-								<label>
-									{field.label}
-									{isRequired && <span className="required">*</span>}
-								</label>
-
-								<input
-									type={field.type}
-									name={field.name}
-									placeholder={field.placeholder || field.label}
-									onChange={handleChange}
-									required={isRequired}
-								/>
-							</div>
-						);
-					})}
-
-					<button type="submit" className="contact-btn" disabled={loading}>
-						{loading ? 'Sending...' : 'Send Message'}
-					</button>
-				</form>
-			</div>
+  return (
+		<section {...storyblokEditable(blok)} className="container mx-auto max-w-4xl min-h-96 px-4 mb-12">
+      {submitted && (
+        <div className="bg-green-300 p-4 mb-6 border-2 border-solid border-teal-700 rounded-xl text-lg">
+          {blok.message}
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="contact-form border-2 border-solid border-teal-700 rounded-xl p-8">
+        {blok.form_fields?.map((field) => {
+          return (
+            <div key={field._uid} className="flex flex-col mb-4">
+              <label className='text-xl mb-2'>{field.label}</label>
+              <input type={field.type} onChange={handleChange} name={field.name} className='border-2 border-solid border-teal-900 rounded-md p-2 bg-white' />
+            </div>
+          );
+        })}
+        <button type="submit" className="text-xl bg-teal-300 px-4 py-2 border-2 border-solid border-teal-900 rounded-xl mt-4 cursor-pointer hover:bg-teal-700 hover:text-white transition-colors duration-300 ease-in-out">
+          {blok.button_label}
+        </button>
+      </form>
 		</section>
 	);
 }
