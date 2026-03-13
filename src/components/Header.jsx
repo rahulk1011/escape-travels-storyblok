@@ -34,13 +34,13 @@ export default function Header() {
           transition-all duration-300 ease-in-out
           ${isOpen ? 'max-h-60 p-4 border-t border-slate-700 lg:border-none' : 'max-h-0 overflow-hidden lg:max-h-full'}
         `}>
-          <Link className='text-xl font-bold text-sky-50 mb-4 lg:mb-0 lg:mr-16' href="/" onClick={() => setIsOpen(false)}>
+          <Link className='text-xl font-bold text-sky-50 mb-4 lg:mb-0 lg:mr-16 hover:text-orange-500' href="/" onClick={() => setIsOpen(false)}>
             Home
           </Link>
-          <Link className='text-xl font-bold text-sky-50 mb-4 lg:mb-0 lg:mr-16' href="/tours" onClick={() => setIsOpen(false)}>
+          <Link className='text-xl font-bold text-sky-50 mb-4 lg:mb-0 lg:mr-16 hover:text-orange-500' href="/tours" onClick={() => setIsOpen(false)}>
             Tours
           </Link>
-          <Link className='text-xl font-bold text-sky-50' href="/contact-us" onClick={() => setIsOpen(false)}>
+          <Link className='text-xl font-bold text-sky-50 hover:text-orange-500' href="/contact-us" onClick={() => setIsOpen(false)}>
             Contact Us
           </Link>
         </nav>
