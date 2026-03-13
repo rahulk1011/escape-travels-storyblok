@@ -1,32 +1,41 @@
+import { NextResponse } from 'next/server';
+
 export async function POST(request) {
+  try {
+    // 1. Parse the incoming JSON body
+    const body = await request.json();
+    const { name, email, phone, message } = body;
 
-  const body = await request.json();
-
-  const storyData = {
-    story: {
-      name: `submission-${Date.now()}`,
-      slug: `submission-${Date.now()}`,
-      parent_id: 123456,
-      content: {
-        component: "contact_submission",
-        name: body.name,
-        email: body.email,
-        message: body.message
-      }
+    // 2. Server-Side Validation (The "Safety Net")
+    if (!name || !email) {
+      return NextResponse.json(
+        { error: 'Name and Email are required.' },
+        { status: 400 }
+      );
     }
-  };
 
-  await fetch(
-    `https://mapi.storyblok.com/v1/spaces/${process.env.STORYBLOK_SPACE_ID}/stories`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: process.env.STORYBLOK_MANAGEMENT_TOKEN
-      },
-      body: JSON.stringify(storyData)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'Invalid email format.' },
+        { status: 400 }
+      );
     }
-  );
 
-  return Response.json({ success: true });
+    // 3. Process the data
+    // This is where you would send an email (via Resend/SendGrid) or save to a database (via Prisma/Supabase)
+    console.log('Form submission received:', body);
+
+    // Simulated "Success" response
+    return NextResponse.json(
+      { message: 'Message sent successfully!' },
+      { status: 200 }
+    );
+
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
 }
