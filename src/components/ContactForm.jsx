@@ -78,10 +78,10 @@ export default function ContactForm({ blok }) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="contact-form border-2 border-solid border-teal-700 rounded-xl p-8 bg-white shadow-sm">
+      <form onSubmit={handleSubmit} className="contact-form border-2 border-solid border-black rounded-xl p-8 bg-slate-300 shadow-sm">
         {blok.form_fields?.map((field) => (
           <div key={field._uid} className="flex flex-col mb-4">
-            <label className='text-xl mb-2 font-medium' htmlFor={field.name}>
+            <label className='text-xl mb-2 font-medium text-slate-800' htmlFor={field.name}>
               {field.label}
             </label>
             <input
@@ -90,8 +90,8 @@ export default function ContactForm({ blok }) {
               name={field.name}
               value={formData[field.name] || ""}
               onChange={handleChange}
-              className={`border-2 border-solid rounded-md p-2 outline-none transition-colors ${
-                errors[field.name] ? 'border-red-500 bg-red-50' : 'border-teal-900 focus:border-teal-500'
+              className={`border-2 border-solid rounded-md p-2 outline-none bg-white transition-colors ${
+                errors[field.name] ? 'border-red-400 bg-red-50' : 'border-teal-900 focus:border-teal-500'
               }`}
             />
             {errors[field.name] && (
@@ -105,7 +105,7 @@ export default function ContactForm({ blok }) {
         <button 
           type="submit" 
           disabled={loading}
-          className="text-xl bg-teal-300 px-6 py-2 border-2 border-solid border-teal-900 rounded-xl mt-4 cursor-pointer hover:bg-teal-700 hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="text-xl bg-teal-200 px-6 py-2 border-2 border-solid border-teal-900 rounded-xl mt-4 cursor-pointer hover:bg-teal-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Sending..." : blok.button_label}
         </button>

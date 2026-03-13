@@ -4,6 +4,10 @@ html {
   font-family: var(--font-amarante);
 }
 
+h1, h2, h3, h4, p, a {
+  letter-spacing: 1px;
+}
+
 .slider-wrapper .custom-swiper-slider .swiper-button-prev,
 .slider-wrapper .custom-swiper-slider .swiper-button-next {
   background: #0C0A09;
