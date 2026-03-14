@@ -1,6 +1,6 @@
 import Page from "../components/Page";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Footer from "../components/global/Footer";
 import Feature from "../components/Feature";
 import Grid from "../components/Grid";
 import Teaser from "../components/Teaser";
