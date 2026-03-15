@@ -1,41 +1,18 @@
 import { NextResponse } from 'next/server';
 
-export async function POST(request) {
+export async function POST(req) {
+  const body = await req.json();
+  const googleScriptUrl = "https://script.google.com/macros/s/AKfycbz6zwjaND4kb-hlZRG940YuX6d9O0NDcFrueqquPK8osX321rxCR6qUaswpsQiBAyGPPA/exec";
+
   try {
-    // 1. Parse the incoming JSON body
-    const body = await request.json();
-    const { name, email, phone, message } = body;
+    const response = await fetch(googleScriptUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
-    // 2. Server-Side Validation (The "Safety Net")
-    if (!name || !email) {
-      return NextResponse.json(
-        { error: 'Name and Email are required.' },
-        { status: 400 }
-      );
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email format.' },
-        { status: 400 }
-      );
-    }
-
-    // 3. Process the data
-    // This is where you would send an email (via Resend/SendGrid) or save to a database (via Prisma/Supabase)
-    console.log('Form submission received:', body);
-
-    // Simulated "Success" response
-    return NextResponse.json(
-      { message: 'Message sent successfully!' },
-      { status: 200 }
-    );
-
+    return new Response("OK", { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return new Response("Error", { status: 500 });
   }
 }
