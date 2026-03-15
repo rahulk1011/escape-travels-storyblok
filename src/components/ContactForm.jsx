@@ -54,7 +54,10 @@ export default function ContactForm({ blok }) {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          source_id: "escapetravels" 
+        }),
       });
 
       if (response.ok) {
