@@ -11,7 +11,7 @@ export default function Footer({ blok }) {
 
   return (
     <footer className="bg-zinc-800 text-white px-8 lg:px-16 py-8">
-      <div className="max-w-[1520] mx-auto grid lg:grid-cols-2 gap-8">
+      <div className="max-w-[1520] mx-auto grid lg:grid-cols-3 gap-8">
         <div>
           <img 
             src={footerBlok.logo.filename} 
@@ -21,6 +21,13 @@ export default function Footer({ blok }) {
           <p className="text-slate-300">
             {footerBlok.description}
           </p>
+        </div>
+        <div className="flex flex-col gap-4 lg:items-end lg:justify-end">
+          {footerBlok.nav_links?.map((link, index) => (
+            <Link key={link._uid} href={link.url?.cached_url || link.url || "#"} className="text-amber-400">
+              {link.label}
+            </Link>
+          ))}
         </div>
         <div className="flex gap-4 items-center lg:justify-end">
           {footerBlok.social_links.map((social) => (

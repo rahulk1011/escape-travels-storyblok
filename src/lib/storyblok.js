@@ -10,6 +10,8 @@ import Testimonial from "../components/Testimonial";
 import RecommendedTours from "../components/RecommendedTours";
 import Slider from "../components/Slider";
 import ContactForm from "../components/ContactForm";
+import Sitemap from "../components/Sitemap";
+import FrequentlyAskedQuestion from "../components/FrequentlyAskedQuestion";
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
 
 // 1. Define your caching utility
@@ -39,6 +41,8 @@ export const getStoryblokApi = storyblokInit({
 		recommended_tours: RecommendedTours,
 		slider: Slider,
     contact_form: ContactForm,
+		sitemap: Sitemap,
+		faq: FrequentlyAskedQuestion
 	},
 	apiOptions: {
 		fetch: cachedFetch,
