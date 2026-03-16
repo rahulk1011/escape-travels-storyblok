@@ -4,6 +4,7 @@ import { getStoryblokApi } from '../lib/storyblok';
 import { Amarante } from 'next/font/google';
 import Header from '../components/global/Header';
 import Footer from '../components/global/Footer';
+import Breadcrumb from "../components/global/Breadcrumb";
 
 const amarante = Amarante({
   subsets: ['latin'],
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }) {
 				<StoryblokProvider>
           {/* Dynamic Storyblok Header */}
           {headerData && <Header blok={headerData.content} />}
+          <Breadcrumb />
           {children}
           {/* Dynamic Storyblok Footer */}
           {footerData && <Footer blok={footerData.content} />}
