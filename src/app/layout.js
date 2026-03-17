@@ -6,12 +6,7 @@ import Header from '../components/global/Header';
 import Footer from '../components/global/Footer';
 import Breadcrumb from "../components/global/Breadcrumb";
 
-const amarante = Amarante({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-amarante',
-  weight: ['400']
-});
+const amarante = Amarante({ subsets: ['latin'], display: 'swap', variable: '--font-amarante', weight: ['400'] });
 
 export const metadata = {
   title: 'Escape Travels',

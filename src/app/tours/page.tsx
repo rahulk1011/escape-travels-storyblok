@@ -10,6 +10,14 @@ const fetchToursPage = async () => {
   return data.story;
 };
 
+export async function generateMetadata() {
+  const story = await fetchToursPage();
+  return {
+    title: story.content.meta_title + " | Escape Travels",
+    description: story.content.meta_description,
+  };
+}
+
 const fetchAllTours = async () => {
   const client = getStoryblokApi();
   const response = await client.getStories({

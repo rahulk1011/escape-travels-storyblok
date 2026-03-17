@@ -9,6 +9,14 @@ const fetchSitemapPage = async () => {
   return data.story;
 };
 
+export async function generateMetadata() {
+  const story = await fetchSitemapPage();
+  return {
+    title: story.content.meta_title + " | Escape Travels",
+    description: story.content.meta_description,
+  };
+}
+
 const SitemapPage = async () => {
   const story = await fetchSitemapPage();
   return <StoryblokStory story={story} />;
