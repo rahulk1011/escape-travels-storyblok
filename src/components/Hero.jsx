@@ -14,7 +14,7 @@ const Hero = ({ blok }) => {
 
   return (
     <div {...storyblokEditable(blok)} 
-      className="hero-main relative overflow-hidden" 
+      className="hero-main relative overflow-hidden min-h-[30rem] flex items-center" 
       style={{ 
         backgroundColor: bgColor,
         backgroundImage: bgImage ? `url(${bgImage})` : 'none',

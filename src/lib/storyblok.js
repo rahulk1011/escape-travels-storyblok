@@ -12,6 +12,7 @@ import Slider from "../components/Slider";
 import ContactForm from "../components/ContactForm";
 import Sitemap from "../components/Sitemap";
 import FrequentlyAskedQuestion from "../components/FrequentlyAskedQuestion";
+import VideoBanner from "../components/VideoBanner";
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
 
 // 1. Define your caching utility
@@ -42,7 +43,8 @@ export const getStoryblokApi = storyblokInit({
 		slider: Slider,
     contact_form: ContactForm,
 		sitemap: Sitemap,
-		faq: FrequentlyAskedQuestion
+		faq: FrequentlyAskedQuestion,
+		video_banner: VideoBanner,
 	},
 	apiOptions: {
 		fetch: cachedFetch,
