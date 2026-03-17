@@ -12,8 +12,8 @@ const fetchFAQPage = async () => {
 export async function generateMetadata() {
   const story = await fetchFAQPage();
   return {
-    title: story.content.meta_title + " | Escape Travels",
-    description: story.content.meta_description,
+    title: story.content.seo_metatag.title + " | Escape Travels",
+    description: story.content.seo_metatag.description,
   };
 }
 
