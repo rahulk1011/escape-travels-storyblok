@@ -1,5 +1,5 @@
 "use client";
-import { storyblokEditable } from '@storyblok/react';
+import { storyblokEditable, StoryblokServerRichText } from '@storyblok/react/rsc';
 import { useState } from 'react';
 
 export default function ContactForm({ blok }) {
@@ -74,45 +74,50 @@ export default function ContactForm({ blok }) {
   };
 
   return (
-    <section {...storyblokEditable(blok)} className="container mx-auto max-w-4xl min-h-96 px-4 mb-12">
-      {submitted && (
-        <div className="bg-green-100 p-4 mb-6 border-2 border-green-700 rounded-xl text-lg text-green-800">
-          {blok.message || "Thank you! Your message has been sent."}
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="contact-form border-2 border-solid border-black rounded-xl p-8 bg-slate-300 shadow-sm">
-        {blok.form_fields?.map((field) => (
-          <div key={field._uid} className="flex flex-col mb-4">
-            <label className='text-xl mb-2 font-medium text-slate-800' htmlFor={field.name}>
-              {field.label}
-            </label>
-            <input
-              id={field.name}
-              type={field.type}
-              name={field.name}
-              value={formData[field.name] || ""}
-              onChange={handleChange}
-              className={`border-2 border-solid rounded-md p-2 outline-none bg-white transition-colors ${
-                errors[field.name] ? 'border-red-400 bg-red-50' : 'border-teal-900 focus:border-teal-500'
-              }`}
-            />
-            {errors[field.name] && (
-              <span className="text-red-600 text-sm mt-1 font-semibold">
-                {errors[field.name]}
-              </span>
-            )}
+    <div className='contact-us-main flex flex-col items-center max-w-[1520] px-4 py-4 mx-auto xl:flex-row xl:py-10'>
+      <div className='contact-us-description p-4 max-w-[800] mx-auto mb-6 xl:mb-0'>
+        <StoryblokServerRichText doc={blok.description} />
+      </div>
+      <div {...storyblokEditable(blok)} className="container max-w-[800] mx-auto min-h-96 px-4 mb-6 xl:mb-0">
+        {submitted && (
+          <div className="bg-green-100 p-4 mb-6 border-2 border-green-700 rounded-xl text-lg text-green-800">
+            {blok.message || "Thank you! Your message has been sent."}
           </div>
-        ))}
+        )}
 
-        <button 
-          type="submit" 
-          disabled={loading}
-          className="text-xl bg-teal-200 px-6 py-2 border-2 border-solid border-teal-900 rounded-xl mt-4 cursor-pointer hover:bg-teal-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {loading ? "Sending..." : blok.button_label}
-        </button>
-      </form>
-    </section>
+        <form onSubmit={handleSubmit} className="contact-form border-2 border-solid border-black rounded-xl p-8 bg-slate-300 shadow-sm">
+          {blok.form_fields?.map((field) => (
+            <div key={field._uid} className="flex flex-col mb-4">
+              <label className='text-xl mb-2 font-medium text-slate-800' htmlFor={field.name}>
+                {field.label}
+              </label>
+              <input
+                id={field.name}
+                type={field.type}
+                name={field.name}
+                value={formData[field.name] || ""}
+                onChange={handleChange}
+                className={`border-2 border-solid rounded-md p-2 outline-none bg-white transition-colors ${
+                  errors[field.name] ? 'border-red-400 bg-red-50' : 'border-teal-900 focus:border-teal-500'
+                }`}
+              />
+              {errors[field.name] && (
+                <span className="text-red-600 text-sm mt-1 font-semibold">
+                  {errors[field.name]}
+                </span>
+              )}
+            </div>
+          ))}
+
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="text-xl bg-teal-200 px-6 py-2 border-2 border-solid border-teal-900 rounded-xl mt-4 cursor-pointer hover:bg-teal-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Sending..." : blok.button_label}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }

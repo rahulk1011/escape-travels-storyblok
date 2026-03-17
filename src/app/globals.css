@@ -62,7 +62,7 @@ h1, h2, h3, h4, p, a {
 }
 
 .tour-page-main .tour-body-main .content-container h2 {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 500;
   margin-bottom: 16px;
 }
@@ -77,8 +77,26 @@ h1, h2, h3, h4, p, a {
   margin-bottom: 16px;
 }
 
+.contact-us-main .contact-us-description h2 {
+  font-size: 32px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #0C4A6E;
+}
+
+.contact-us-main .contact-us-description p {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.contact-us-main .contact-us-description ul {
+  list-style: square;
+  padding-left: 20px;
+}
+
 @media (max-width: 1440px) {
-  .tour-page-main .tour-body-main .content-container h2 {
+  .tour-page-main .tour-body-main .content-container h2,
+  .contact-us-main .contact-us-description h2 {
     font-size: 28px;
   }
 
