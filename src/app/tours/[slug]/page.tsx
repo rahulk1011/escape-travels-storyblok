@@ -1,6 +1,12 @@
 import { getStoryblokApi } from "../../../lib/storyblok";
 import { StoryblokStory } from "@storyblok/react/rsc";
-import { draftMode } from "next/headers";
+import { Metadata } from "next";
+
+// Define the Props type for reusability
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 export const generateStaticParams = async () => {
   const client = getStoryblokApi();
@@ -8,8 +14,8 @@ export const generateStaticParams = async () => {
     content_type: "tour",
     version: process.env.NODE_ENV === "development" ? "draft" : "published",
   });
-  return response.data.stories.map((story) => ({ slug: story.slug}));
-}
+  return response.data.stories.map((story: any) => ({ slug: story.slug }));
+};
 
 const fetchTourPage = async (slug: string) => {
   const client = getStoryblokApi();
@@ -20,16 +26,20 @@ const fetchTourPage = async (slug: string) => {
   return data.story;
 };
 
-const TourPage = async (props: { 
-  params: Promise<{ slug: string }>; 
-  searchParams: Promise<any> 
-}) => {
-  // 1. Await the params and searchParams from the Next.js props first
-  const params = await props.params;
-  const searchParams = await props.searchParams;
+// Added params argument and awaited it
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const story = await fetchTourPage(slug);
 
-  // 2. Use the awaited slug to fetch the Storyblok data
-  const story = await fetchTourPage(params.slug);
+  return {
+    title: `${story.content.meta_title} | Escape Travels` || "Escape Travels Tours",
+    description: story.content.meta_description || "Wonderful City Tours",
+  };
+}
+
+const TourPage = async (props: Props) => {
+  const { slug } = await props.params;
+  const story = await fetchTourPage(slug);
 
   return <StoryblokStory story={story} />;
 };

@@ -9,6 +9,14 @@ const fetchContactPage = async () => {
   return data.story;
 };
 
+export async function generateMetadata() {
+  const story = await fetchContactPage();
+  return {
+    title: story.content.meta_title + " | Escape Travels",
+    description: story.content.meta_description,
+  };
+}
+
 const ContactPage = async () => {
   const story = await fetchContactPage();
   return <StoryblokStory story={story} />;

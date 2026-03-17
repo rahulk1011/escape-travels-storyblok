@@ -10,6 +10,14 @@ const fetchHomePage = async () => {
   return data.story;
 };
 
+export async function generateMetadata() {
+  const story = await fetchHomePage();
+  return {
+    title: story.content.meta_title + " | Escape Travels",
+    description: story.content.meta_description,
+  };
+}
+
 
 const HomePage = async () => {
   const story = await fetchHomePage();
