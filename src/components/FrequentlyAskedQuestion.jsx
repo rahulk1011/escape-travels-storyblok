@@ -17,7 +17,7 @@ export default function FrequentlyAskedQuestion({ blok }) {
 
   return (
     <div {...storyblokEditable(blok)} className="container mx-auto px-4 py-16 min-h-160">
-      <h1 className="text-cyan-900 text-center text-4xl font-bold md:text-5xl xl:text-6xl">
+      <h1 className="text-cyan-900 text-center text-4xl font-bold mb-8 md:text-5xl xl:text-6xl">
         {blok.heading}
       </h1>
 
