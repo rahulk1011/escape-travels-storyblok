@@ -25,7 +25,7 @@ export default function Header({ blok }) {
 
       <header 
         {...storyblokEditable(headerBlok)} 
-        className='main-navigation bg-slate-800 pt-4 pb-4 pl-8 pr-8 sticky top-0 z-50 shadow-md'
+        className='main-navigation bg-slate-800 pt-4 pb-4 pl-8 pr-8 sticky top-0 z-50 shadow-md border-b-2 border-orange-400/75'
       >
         <div className='header-wrapper max-w-[1520px] mx-auto flex justify-between items-center'>
           {/* Logo */}
