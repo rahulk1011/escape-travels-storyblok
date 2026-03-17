@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const RecommendedTour = (props) => {
   return (
-    <div className="bg-sky-950 rounded-lg shadow">
+    <div className="bg-sky-950 rounded-lg shadow border-2 border-sky-950">
       <img className="aspect-video rounded-lg object-cover w-full" src={props.story.content.main_image.filename} alt={props.story.content.main_image?.alt || props.story.content.name} />
       <div className="p-8">
         <div className="flex gap-4 justify-between text-lg font-bold">

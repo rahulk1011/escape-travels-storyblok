@@ -25,37 +25,39 @@ const Breadcrumbs = () => {
   );
 
   return (
-    <nav aria-label="Breadcrumb" className="max-w-[1520] mx-auto my-4 px-4 lg:px-8 2xl:px-0">
-      <ol className="flex list-none items-center p-0 text-base text-sky-700">
-        <li className="flex items-center">
-          <Link href="/" className="hover:text-rose-800 transition-colors">Home</Link>
-          {pathSegments.length > 0 && <ArrowIcon />}
-        </li>
+    <nav aria-label="Breadcrumb" className="bg-slate-300">
+      <div className='max-w-[1520] mx-auto py-4 px-4 lg:px-8 2xl:px-0'>
+        <ol className="flex list-none items-center p-0 text-base text-sky-700">
+          <li className="flex items-center">
+            <Link href="/" className="hover:text-rose-800 transition-colors">Home</Link>
+            {pathSegments.length > 0 && <ArrowIcon />}
+          </li>
 
-        {pathSegments.map((segment, index) => {
-          const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
-          const isLast = index === pathSegments.length - 1;
+          {pathSegments.map((segment, index) => {
+            const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+            const isLast = index === pathSegments.length - 1;
 
-          return (
-            <li key={href} className="flex items-center">
-              {isLast ? (
-                <span className="font-bold text-sky-950 capitalize">
-                  {segment.replace(/-/g, ' ')}
-                </span>
-              ) : (
-                <>
-                  <Link href={href} className="hover:text-rose-800 transition-colors capitalize">
+            return (
+              <li key={href} className="flex items-center">
+                {isLast ? (
+                  <span className="font-bold text-sky-950 capitalize">
                     {segment.replace(/-/g, ' ')}
-                  </Link>
-                  <span className="flex items-center">
-                    <ArrowIcon />
                   </span>
-                </>
-              )}
-            </li>
-          );
-        })}
-      </ol>
+                ) : (
+                  <>
+                    <Link href={href} className="hover:text-rose-800 transition-colors capitalize">
+                      {segment.replace(/-/g, ' ')}
+                    </Link>
+                    <span className="flex items-center">
+                      <ArrowIcon />
+                    </span>
+                  </>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </nav>
   );
 };

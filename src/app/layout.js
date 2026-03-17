@@ -45,7 +45,7 @@ export default async function RootLayout({ children }) {
 	const footerData = await getFooterData();
 	return (
 		<html lang="en" className={`${amarante.variable}`}>
-			<body className='bg-blue-50'>
+			<body className='bg-white'>
 				<StoryblokProvider>
           {/* Dynamic Storyblok Header */}
           {headerData && <Header blok={headerData.content} />}
