@@ -75,10 +75,10 @@ export default function ContactForm({ blok }) {
 
   return (
     <div className='contact-us-main flex flex-col items-center max-w-[1520] px-4 py-4 mx-auto xl:flex-row xl:py-10'>
-      <div className='contact-us-description p-4 max-w-[800] mx-auto mb-6 xl:mb-0'>
+      <div className='contact-us-description p-4 max-w-[800] mx-auto mb-6 xl:mb-0 xl:max-w-1/2'>
         <StoryblokServerRichText doc={blok.description} />
       </div>
-      <div {...storyblokEditable(blok)} className="container max-w-[800] mx-auto min-h-96 px-4 mb-6 xl:mb-0">
+      <div {...storyblokEditable(blok)} className="container max-w-[800] mx-auto min-h-96 px-4 mb-6 xl:mb-0 xl:max-w-1/2">
         {submitted && (
           <div className="bg-green-100 p-4 mb-6 border-2 border-green-700 rounded-xl text-lg text-green-800">
             {blok.message || "Thank you! Your message has been sent."}

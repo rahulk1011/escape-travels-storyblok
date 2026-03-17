@@ -3,6 +3,7 @@ import { storyblokEditable } from '@storyblok/react/rsc';
 import { hexToRgba } from '../utils/colors';
 
 const Hero = ({ blok }) => {
+  const sectionID = blok.section_id ?? '';
   const bgColor = blok.bg_color?.color || 'transparent';
   const bgImage = blok.bg_image?.filename;
   const textColor = blok.text_color?.color || 'inherit';
@@ -15,6 +16,7 @@ const Hero = ({ blok }) => {
   return (
     <div {...storyblokEditable(blok)} 
       className="hero-main relative overflow-hidden min-h-[30rem] flex items-center" 
+      id={sectionID}
       style={{ 
         backgroundColor: bgColor,
         backgroundImage: bgImage ? `url(${bgImage})` : 'none',
