@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const story = await fetchTourPage(slug);
 
   return {
-    title: `${story.content.meta_title} | Escape Travels` || "Escape Travels Tours",
-    description: story.content.meta_description || "Wonderful City Tours",
+    title: `${story.content.seo_metatag.title} | Escape Travels` || "Escape Travels Tours",
+    description: story.content.seo_metatag.description || "Wonderful City Tours",
   };
 }
 
