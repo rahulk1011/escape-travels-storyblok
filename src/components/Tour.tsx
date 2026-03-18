@@ -1,12 +1,47 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { storyblokEditable, StoryblokServerRichText } from '@storyblok/react/rsc';
+import { getStoryblokApi } from "../lib/storyblok";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+const fetchAllTours = async () => {
+  const client = getStoryblokApi();
+  const response = await client.getStories({
+    content_type: "tour",
+    version: process.env.NODE_ENV === "development" ? "draft" : "published",
+  });
+  return response.data.stories;
+};
 
 const Tour = (props: any) => {
   const { blok } = props;
   const tour_options = blok.tour_options || [];
+
+  // State for the local tour options
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selectedTour = tour_options[selectedIndex];
+
+  // State for "All Tours" fetched from Storyblok
+  const [allTours, setAllTours] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      const client = getStoryblokApi();
+      const response = await client.getStories({
+        content_type: "tour",
+        version: process.env.NODE_ENV === "development" ? "draft" : "published",
+      });
+      setAllTours(response.data.stories);
+    };
+
+    fetchTours();
+  }, []);
 
   return (
     <main {...storyblokEditable(blok)} className="tour-page-main container mx-auto p-5 sm:p-6 md:p-8 w-full">
@@ -16,8 +51,39 @@ const Tour = (props: any) => {
       <p className='tour-introduction mb-8'>
         {blok.introduction}
       </p>
-      <img className='rounded-lg border-2 border-gray-600 max-h-[400px] my-8 mx-auto' src={blok.main_image?.filename} alt={blok.main_image?.alt || blok.name} />
-      <img className='rounded-lg border-2 border-gray-600 max-h-[400px] mb-8 mx-auto' src={blok.secondary_image?.filename} alt={blok.secondary_image?.alt || blok.name}/>
+      <div className="slider-wrapper container py-16 w-full mx-auto px-4">
+        <Swiper
+          loop={true} 
+          modules={[Autoplay, Navigation]}
+          centeredSlides={true}
+          navigation
+          spaceBetween={20}
+          slidesPerView={1}
+          autoplay={{ delay: 2000, disableOnInteraction: false, }}
+          breakpoints={{
+            1024: {
+              slidesPerView: 2,
+              spaceBetween: 30,
+            },
+            1536: {
+              slidesPerView: 3,
+              spaceBetween: 40,
+            },
+          }}
+          className="custom-swiper-slider"
+        >
+          {blok.img_slider.map((slide) => (
+            <SwiperSlide key={slide._uid}>
+              <img 
+                className="rounded-lg border-1 border-gray-600"
+                src={slide.image.filename} 
+                alt={slide.image.alt || "Slider Image"} 
+                style={{ width: '100%', height: 'auto' }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
       <div className='tour-description mb-8'>
         <StoryblokServerRichText doc={blok.body} />
@@ -25,6 +91,7 @@ const Tour = (props: any) => {
 
       <hr className="mb-10 border-gray-500" />
 
+      {/* Internal Tour Options Selector */}
       <div className='tour-selector mx-auto flex flex-col justify-between mb-8'>
         <div className='w-full lg:max-w-2/5 mb-8'>
           <label htmlFor="tour-select" className="block mb-2 font-bold text-gray-700">Select a Tour Option:</label>
@@ -50,8 +117,8 @@ const Tour = (props: any) => {
             <div className="tour-details text-gray-800 mb-4">
               <StoryblokServerRichText doc={selectedTour.tour_details} />
             </div>
-            <div className="flex justify-between items-center border-t border-rose-200 pt-4">
-              <span className="font-semibold text-lg text-rose-700">
+            <div className="flex flex-col sm:flex-row justify-between items-start border-t border-rose-200 pt-4">
+              <span className="font-semibold text-lg text-rose-700 mb-4 sm:mb-0">
                 Price: {selectedTour.tour_price}
               </span>
               <span className="text-base font-medium text-gray-700 italic">
@@ -60,6 +127,30 @@ const Tour = (props: any) => {
             </div>
           </div>
         )}
+      </div>
+
+      <hr className="mb-10 border-gray-500" />
+
+      {/* External Tour List Selector (Fetches all Tour stories) */}
+      <div className='tour-list mx-auto mb-8 mx-auto flex flex-col justify-between'>
+        <div className='w-full lg:max-w-2/5 mb-8'>
+          <label htmlFor="tour-list" className="block mb-2 font-bold text-gray-700">Explore Other Tours:</label>
+          <select 
+            id="tour-list"
+            className="w-full p-4 border-2 border-rose-900 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-500"
+            onChange={(e) => {
+                // Navigate to the tour page if a user selects one
+                if(e.target.value) window.location.href = `/${e.target.value}`;
+            }}
+          >
+            <option value="">Choose a tour...</option>
+            {allTours.map((tour) => (
+              <option key={tour.uuid} value={tour.full_slug}>
+                {tour.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </main>
   );
