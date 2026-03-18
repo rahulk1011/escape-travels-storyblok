@@ -7,7 +7,7 @@ export const RecommendedTour = (props) => {
       <div className="p-8">
         <div className="flex gap-4 justify-between text-lg font-bold">
           <h3 className="text-white">{props.story.content.name}</h3>
-          <p className="text-white font-normal">
+          <p className="text-white font-normal">Starts From:{' '}
             {Number(props.story.content.price).toLocaleString("en-US", {
               style: "currency",
               currency: "INR",
