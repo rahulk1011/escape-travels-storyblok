@@ -94,7 +94,7 @@ const Tour = (props: any) => {
       {/* Internal Tour Options Selector */}
       <div className='tour-selector mx-auto flex flex-col justify-between mb-8'>
         <div className='w-full lg:max-w-2/5 mb-8'>
-          <label htmlFor="tour-select" className="block mb-2 font-bold text-gray-700">Select a Tour Option:</label>
+          <label htmlFor="tour-select" className="block mb-2 font-bold text-lg text-gray-700">Select a Tour Option:</label>
           <select 
             id="tour-select"
             className="w-full p-4 border-2 border-rose-900 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-500"
@@ -117,7 +117,7 @@ const Tour = (props: any) => {
             <div className="tour-details text-gray-800 mb-4">
               <StoryblokServerRichText doc={selectedTour.tour_details} />
             </div>
-            <div className="flex flex-col sm:flex-row justify-between items-start border-t border-rose-200 pt-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start border-t border-rose-200 py-4">
               <span className="font-semibold text-lg text-rose-700 mb-4 sm:mb-0">
                 Price: {selectedTour.tour_price}
               </span>
@@ -134,7 +134,7 @@ const Tour = (props: any) => {
       {/* External Tour List Selector (Fetches all Tour stories) */}
       <div className='tour-list mx-auto mb-8 mx-auto flex flex-col justify-between'>
         <div className='w-full lg:max-w-2/5 mb-8'>
-          <label htmlFor="tour-list" className="block mb-2 font-bold text-gray-700">Explore Other Tours:</label>
+          <label htmlFor="tour-list" className="block mb-2 font-bold text-lg text-gray-700">Explore Other Tours:</label>
           <select 
             id="tour-list"
             className="w-full p-4 border-2 border-rose-900 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-500"

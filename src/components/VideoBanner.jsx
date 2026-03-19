@@ -24,7 +24,7 @@ const VideoBanner = ({ blok }) => {
 
       <div className="relative z-10 text-center text-white px-5">
         <h2 className="mb-4 text-3xl font-bold md:text-4xl xl:text-5xl">{blok.heading}</h2>
-        <p className="text-xl">{blok.sub_heading}</p>
+        <p className="text-xl leading-[1.5]">{blok.sub_heading}</p>
       </div>
     </div>
   );

@@ -88,6 +88,11 @@ h1, h2, h3, h4, p, a {
   padding-left: 20px;
 }
 
+.heading-description-main .container h3,
+.heading-description-main .container p {
+  margin-bottom: 16px;
+}
+
 @media (max-width: 1440px) {
   .contact-us-main .contact-us-description h2 {
     font-size: 28px;
