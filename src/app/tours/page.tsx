@@ -23,6 +23,7 @@ const fetchAllTours = async () => {
   const response = await client.getStories({
     content_type: "tour",
     version: process.env.NODE_ENV === "development" ? "draft" : "published",
+    sort_by: "name:asc",
   });
   return response.data.stories;
 };

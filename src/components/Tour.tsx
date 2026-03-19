@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { storyblokEditable, StoryblokServerRichText } from '@storyblok/react/rsc';
 import { getStoryblokApi } from "../lib/storyblok";
+import { useRouter } from 'next/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 
@@ -42,6 +43,21 @@ const Tour = (props: any) => {
 
     fetchTours();
   }, []);
+
+  const router = useRouter();
+
+  const handleBookTour = () => {
+    if (!selectedTour) return;
+
+    // Create a URL with query parameters
+    const params = new URLSearchParams({
+      city: blok.name,
+      name: selectedTour.tour_name,
+      price: selectedTour.tour_price.toString().replace(/[^0-9.]/g, ''), // Strip currency symbols
+    });
+
+    router.push(`/booking?${params.toString()}`);
+  };
 
   return (
     <main {...storyblokEditable(blok)} className="tour-page-main container mx-auto p-5 sm:p-6 md:p-8 w-full">
@@ -125,6 +141,12 @@ const Tour = (props: any) => {
                 Duration: {selectedTour.tour_duration}
               </span>
             </div>
+            <button 
+              onClick={handleBookTour}
+              className='mt-4 bg-green-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-green-900 transition-colors'
+            >
+              Book Tour
+            </button>
           </div>
         )}
       </div>
