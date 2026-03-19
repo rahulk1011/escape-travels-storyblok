@@ -7,7 +7,7 @@ const VideoBanner = ({ blok }) => {
   const transparentOverlay = hexToRgba(baseColor, opacity);
 
   return (
-    <div {...storyblokEditable(blok)} className="relative h-[80vh] w-full overflow-hidden flex items-center justify-center">
+    <div {...storyblokEditable(blok)} className="relative h-[70vh] w-full overflow-hidden flex items-center justify-center">
       <video
         autoPlay
         loop
@@ -22,8 +22,8 @@ const VideoBanner = ({ blok }) => {
       {/* Background Overlay */}
       <div className="absolute inset-0 z-0" style={{ backgroundColor: transparentOverlay }}/>
 
-      <div className="relative z-10 text-center text-white px-5">
-        <h2 className="mb-4 text-3xl font-bold md:text-4xl xl:text-5xl">{blok.heading}</h2>
+      <div className="container mx-auto relative z-10 text-center text-white px-6">
+        <h2 className="mb-6 text-3xl font-bold md:text-4xl xl:text-5xl">{blok.heading}</h2>
         <p className="text-xl leading-[1.5]">{blok.sub_heading}</p>
       </div>
     </div>
