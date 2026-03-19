@@ -35,7 +35,7 @@ const Hero = ({ blok }) => {
       {/* Content Container */}
       <div className='container mx-auto px-5 py-8 w-full relative z-10 sm:px-8 sm:py-10 md:py-12'>
         <h1 className="text-center text-4xl font-bold md:text-5xl xl:text-6xl" style={{ color: textColor }}>{blok.headline}</h1>
-        <p className="text-center text-xl mt-5 text-sky-900 md:text-2xl" style={{ color: textColor }}>{blok.content}</p>
+        <p className="text-center text-lg mt-5 text-sky-900 md:text-xl leading-[1.5]" style={{ color: textColor }}>{blok.content}</p>
       </div>
     </div>
   );
