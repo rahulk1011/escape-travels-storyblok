@@ -15,6 +15,7 @@ import FrequentlyAskedQuestion from "../components/FrequentlyAskedQuestion";
 import VideoBanner from "../components/VideoBanner";
 import HeadingDescription from "../components/HeadingDescription";
 import ImgContentCTA from "../components/ImgContentCTA";
+import VideoContent from "../components/VideoContent";
 import { apiPlugin, storyblokInit } from '@storyblok/react/rsc';
 
 // 1. Define your caching utility
@@ -49,6 +50,7 @@ export const getStoryblokApi = storyblokInit({
 		video_banner: VideoBanner,
 		heading_description: HeadingDescription,
 		img_content_cta: ImgContentCTA,
+		video_content: VideoContent,
 	},
 	apiOptions: {
 		fetch: cachedFetch,
