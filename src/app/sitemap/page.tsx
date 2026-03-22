@@ -12,8 +12,8 @@ const fetchSitemapPage = async () => {
 export async function generateMetadata() {
   const story = await fetchSitemapPage();
  return {
-    title: story.content.seo_metatag.title + " | Escape Travels",
-    description: story.content.seo_metatag.description,
+    title: story.content.meta_title + " | Escape Travels",
+    description: story.content.meta_description,
   };
 }
 
