@@ -6,8 +6,8 @@ const ImgContentCTA = ({ blok }) => {
 	const bgColor = blok.bg_color?.color || 'transparent';
 	const textColor = blok.text_color?.color || 'inherit';
   const layoutClasses = {
-    'img-left-content-right': 'xl:flex-row',
-    'img-right-content-left': 'xl:flex-row-reverse',
+    'media-left-content-right': 'xl:flex-row',
+    'media-right-content-left': 'xl:flex-row-reverse',
   };
 
   const pageLayout = layoutClasses[blok.layout_option] || 'xl:flex-row';
