@@ -1,8 +1,11 @@
 "use client";
 import { storyblokEditable } from '@storyblok/react/rsc';
 import { hexToRgba } from '../utils/colors';
+import { useDataLayerTracking } from '../lib/useDataLayerTracking';
 
 const Hero = ({ blok }) => {
+  const { sectionRef } = useDataLayerTracking(blok);
+
   const sectionID = blok.section_id ?? '';
   const bgColor = blok.bg_color?.color || 'transparent';
   const bgImage = blok.bg_image?.filename;
@@ -15,6 +18,7 @@ const Hero = ({ blok }) => {
 
   return (
     <div {...storyblokEditable(blok)} 
+      ref={sectionRef}
       className="hero-main relative overflow-hidden min-h-[30rem] flex items-center" 
       id={sectionID}
       style={{ 
