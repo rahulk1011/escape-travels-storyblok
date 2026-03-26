@@ -17,6 +17,7 @@ const ImgContentCTA = ({ blok }) => {
   const pageLayout = layoutClasses[blok.layout_option] || 'xl:flex-row';
 
   const buttonUrl = blok.button_link?.cached_url || blok.button_link?.url;
+  const buttonTarget = blok.button_link?.target;
   const hasButton = blok.button_text && buttonUrl;
 
 	return (
@@ -42,7 +43,7 @@ const ImgContentCTA = ({ blok }) => {
               className="text-xl text-center text-bold inline-block px-8 py-3 mt-4 min-w-[160px] rounded-lg capitalize transition-opacity hover:opacity-90"
               style={{ backgroundColor: textColor, color: bgColor }}
               onClick={() => handleTrackClick()}
-              target='_blank'
+              target={buttonTarget}
             >
               {blok.button_text}
             </Link>
