@@ -1,7 +1,7 @@
 "use client";
 import { storyblokEditable } from '@storyblok/react/rsc';
 import { hexToRgba } from '../utils/colors';
-import { useDataLayerTracking } from '../lib/useDataLayerTracking';
+import { useDataLayerTracking } from '../utils/useDataLayerTracking';
 
 const Hero = ({ blok }) => {
   const { sectionRef } = useDataLayerTracking(blok);

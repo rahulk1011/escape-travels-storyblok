@@ -15,9 +15,9 @@ export const useDataLayerTracking = (blok) => {
           window.dataLayer.push({
             event: 'section_view',
             sectionId: blok.section_id || '',
-            sectionName: blok.section_name || 'unnamed_section',
+            sectionName: blok.section_name || '',
             sectionInfo: blok.section_info || '',
-            sectionType: blok.section_type || 'content_block',
+            sectionType: blok.section_type || '',
           });
           hasTrackedView.current = true;
           observer.unobserve(entry.target);

@@ -1,7 +1,7 @@
 "use client";
 import { storyblokEditable, StoryblokServerRichText } from '@storyblok/react/rsc';
 import Link from 'next/link';
-import { useDataLayerTracking } from '../lib/useDataLayerTracking';
+import { useDataLayerTracking } from '../utils/useDataLayerTracking';
 
 const ImgContentCTA = ({ blok }) => {
   const { sectionRef, handleTrackClick } = useDataLayerTracking(blok);
