@@ -2,33 +2,49 @@
 import { useState, useEffect } from 'react';
 import { storyblokEditable, StoryblokServerRichText } from '@storyblok/react/rsc';
 import { getStoryblokApi } from "../lib/storyblok";
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation'; // Added useParams
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const fetchAllTours = async () => {
-  const client = getStoryblokApi();
-  const response = await client.getStories({
-    content_type: "tour",
-    version: process.env.NODE_ENV === "development" ? "draft" : "published",
-  });
-  return response.data.stories;
-};
-
 const Tour = (props: any) => {
   const { blok } = props;
-  const tour_options = blok.tour_options || [];
+  const params = useParams();
+  const router = useRouter();
+  
+  // Detect language from URL (e.g., /de/tours/mumbai -> lang: 'de')
+  const lang = (params.lang as string) || "default";
 
-  // State for the local tour options
+  // Static translations dictionary
+  const i18n = {
+    en: {
+      selectTour: "Select a Tour Option:",
+      exploreOther: "Explore Other Tours:",
+      choose: "Choose a tour...",
+      price: "Price",
+      person: "per person",
+      duration: "Duration",
+      book: "Book Tour"
+    },
+    de: {
+      selectTour: "Wählen Sie eine Touroption:",
+      exploreOther: "Andere Touren erkunden:",
+      choose: "Wählen Sie eine Tour...",
+      price: "Preis",
+      person: "pro Person",
+      duration: "Dauer",
+      book: "Tour buchen"
+    }
+  };
+
+  const t = i18n[lang as keyof typeof i18n] || i18n.en;
+
+  const tour_options = blok.tour_options || [];
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selectedTour = tour_options[selectedIndex];
-
-  // State for "All Tours" fetched from Storyblok
   const [allTours, setAllTours] = useState<any[]>([]);
 
   useEffect(() => {
@@ -37,26 +53,26 @@ const Tour = (props: any) => {
       const response = await client.getStories({
         content_type: "tour",
         version: process.env.NODE_ENV === "development" ? "draft" : "published",
+        language: lang, // CRITICAL: Fetch other tours in the current language
       });
       setAllTours(response.data.stories);
     };
 
     fetchTours();
-  }, []);
-
-  const router = useRouter();
+  }, [lang]); // Re-fetch if language changes
 
   const handleBookTour = () => {
     if (!selectedTour) return;
 
-    // Create a URL with query parameters
-    const params = new URLSearchParams({
+    const queryParams = new URLSearchParams({
       city: blok.name,
       name: selectedTour.tour_name,
-      price: selectedTour.tour_price.toString().replace(/[^0-9.]/g, ''), // Strip currency symbols
+      price: selectedTour.tour_price.toString().replace(/[^0-9.]/g, ''),
     });
 
-    router.push(`/booking?${params.toString()}`);
+    // Ensure booking route preserves language prefix
+    const bookingPath = lang === "default" || lang === "en" ? "/booking" : `/${lang}/booking`;
+    router.push(`${bookingPath}?${queryParams.toString()}`);
   };
 
   return (
@@ -67,6 +83,8 @@ const Tour = (props: any) => {
       <p className='tour-introduction mb-8'>
         {blok.introduction}
       </p>
+      
+      {/* Slider Section */}
       <div className="slider-wrapper container py-16 w-full mx-auto px-4">
         <Swiper
           loop={true} 
@@ -77,18 +95,12 @@ const Tour = (props: any) => {
           slidesPerView={1}
           autoplay={{ delay: 2000, disableOnInteraction: false, }}
           breakpoints={{
-            1024: {
-              slidesPerView: 2,
-              spaceBetween: 30,
-            },
-            1536: {
-              slidesPerView: 3,
-              spaceBetween: 40,
-            },
+            1024: { slidesPerView: 2, spaceBetween: 30 },
+            1536: { slidesPerView: 3, spaceBetween: 40 },
           }}
           className="custom-swiper-slider"
         >
-          {blok.img_slider.map((slide) => (
+          {blok.img_slider?.map((slide: any) => (
             <SwiperSlide key={slide._uid}>
               <img 
                 className="rounded-lg border-1 border-gray-600"
@@ -110,7 +122,7 @@ const Tour = (props: any) => {
       {/* Internal Tour Options Selector */}
       <div className='tour-selector mx-auto flex flex-col justify-between mb-8'>
         <div className='w-full lg:max-w-2/5 mb-8'>
-          <label htmlFor="tour-select" className="block mb-2 font-bold text-lg text-gray-700">Select a Tour Option:</label>
+          <label htmlFor="tour-select" className="block mb-2 font-bold text-lg text-gray-700">{t.selectTour}</label>
           <select 
             id="tour-select"
             className="w-full p-4 border-2 border-rose-900 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-500"
@@ -135,17 +147,17 @@ const Tour = (props: any) => {
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-start border-t border-rose-200 py-4">
               <span className="font-semibold text-lg text-rose-700 mb-4 sm:mb-0">
-                Price: {selectedTour.tour_price}
+                {t.price}: {selectedTour.tour_price} {t.person}
               </span>
               <span className="text-base font-medium text-gray-700 italic">
-                Duration: {selectedTour.tour_duration}
+                {t.duration}: {selectedTour.tour_duration}
               </span>
             </div>
             <button 
               onClick={handleBookTour}
               className='mt-4 bg-green-700 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-green-900 transition-colors'
             >
-              Book Tour
+              {t.book}
             </button>
           </div>
         )}
@@ -153,19 +165,21 @@ const Tour = (props: any) => {
 
       <hr className="mb-10 border-gray-500" />
 
-      {/* External Tour List Selector (Fetches all Tour stories) */}
-      <div className='tour-list mx-auto mb-8 mx-auto flex flex-col justify-between'>
+      {/* Localized External Tour List Selector */}
+      <div className='tour-list mx-auto mb-8 flex flex-col justify-between'>
         <div className='w-full lg:max-w-2/5 mb-8'>
-          <label htmlFor="tour-list" className="block mb-2 font-bold text-lg text-gray-700">Explore Other Tours:</label>
+          <label htmlFor="tour-list" className="block mb-2 font-bold text-lg text-gray-700">{t.exploreOther}</label>
           <select 
             id="tour-list"
             className="w-full p-4 border-2 border-rose-900 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-rose-500"
             onChange={(e) => {
-                // Navigate to the tour page if a user selects one
-                if(e.target.value) window.location.href = `/${e.target.value}`;
+                if(e.target.value) {
+                  // Storyblok full_slug usually includes the lang prefix for non-default languages
+                  window.location.href = `/${e.target.value}`;
+                }
             }}
           >
-            <option value="">Choose a tour...</option>
+            <option value="">{t.choose}</option>
             {allTours.map((tour) => (
               <option key={tour.uuid} value={tour.full_slug}>
                 {tour.name}

@@ -10,7 +10,7 @@ import Testimonial from "../components/Testimonial";
 import RecommendedTours from "../components/RecommendedTours";
 import Slider from "../components/Slider";
 import ContactForm from "../components/ContactForm";
-import Sitemap from "../components/Sitemap";
+import Sitemap from "../components/global/Sitemap";
 import FrequentlyAskedQuestion from "../components/FrequentlyAskedQuestion";
 import VideoBanner from "../components/VideoBanner";
 import HeadingDescription from "../components/HeadingDescription";

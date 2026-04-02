@@ -13,12 +13,13 @@ export const metadata = {
   description: 'Explore India’s vibrant spirit through curated journeys.',
 };
 
-// Function to fetch the global header story data
-async function getHeaderData() {
+// Accept 'lang' parameter to fetch localized global data
+async function getHeaderData(lang = "default") {
   try {
     const storyblokApi = getStoryblokApi();
     const { data } = await storyblokApi.get('cdn/stories/globals/header', {
       version: process.env.NODE_ENV === "development" ? "draft" : "published",
+      language: lang, // Storyblok handles the translation injection
     });
     return data.story;
   } catch (error) {
@@ -27,11 +28,12 @@ async function getHeaderData() {
   }
 }
 
-async function getFooterData() {
+async function getFooterData(lang = "default") {
   try {
     const storyblokApi = getStoryblokApi();
     const { data } = await storyblokApi.get('cdn/stories/globals/footer', {
       version: process.env.NODE_ENV === "development" ? "draft" : "published",
+      language: lang,
     });
     return data.story;
   } catch (error) {
@@ -40,21 +42,27 @@ async function getFooterData() {
   }
 }
 
-export default async function RootLayout({ children }) {
-  const headerData = await getHeaderData();
-	const footerData = await getFooterData();
-	return (
-		<html lang="en" className={`${amarante.variable}`}>
-			<body className='bg-white'>
-				<StoryblokProvider>
-          {/* Dynamic Storyblok Header */}
+// Next.js Layouts receive 'params' as a prop
+export default async function RootLayout({ children, params }) {
+  // Await params to get the [lang] dynamic segment
+  const { lang } = await params;
+  const currentLang = lang || 'en';
+  console.log(currentLang);
+
+  const headerData = await getHeaderData(currentLang);
+  const footerData = await getFooterData(currentLang);
+
+  return (
+    <html lang={currentLang} className={`${amarante.variable}`}>
+      <body className='bg-white'>
+        <StoryblokProvider>
+          {/* We pass the blok data to the Header/Footer as usual */}
           {headerData && <Header blok={headerData.content} />}
           <Breadcrumb />
           {children}
-          {/* Dynamic Storyblok Footer */}
           {footerData && <Footer blok={footerData.content} />}
-				</StoryblokProvider>
-			</body>
-		</html>
-	);
+        </StoryblokProvider>
+      </body>
+    </html>
+  );
 }
