@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 const Breadcrumbs = () => {
   const pathname = usePathname();
-  if (pathname === "/" || pathname === "/home") {
+  if (pathname === "/" || pathname === "/home" || pathname === "/de" || pathname === "/de/home") {
     return null;
   }
   const pathSegments = pathname.split('/').filter((item) => item !== '');

@@ -1,4 +1,4 @@
-import { getStoryblokApi } from "../lib/storyblok";
+import { getStoryblokApi } from "../../lib/storyblok";
 import { StoryblokServerComponent } from "@storyblok/react/rsc";
 
 // We now accept 'lang' as an argument

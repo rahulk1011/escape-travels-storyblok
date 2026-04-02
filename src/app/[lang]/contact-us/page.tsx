@@ -1,4 +1,4 @@
-import { getStoryblokApi } from "../../lib/storyblok";
+import { getStoryblokApi } from "../../../lib/storyblok";
 import { StoryblokStory } from "@storyblok/react/rsc";
 
 // Accept 'lang' parameter (defaulting to 'en' or default Storyblok language)
