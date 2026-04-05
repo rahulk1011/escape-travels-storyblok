@@ -18,6 +18,10 @@ h1, h2, h3, h4, p, a {
   top: 47%;
 }
 
+.slider-wrapper .custom-swiper-slider .swiper-wrapper {
+  padding: 24px 0;
+}
+
 .slider-wrapper .custom-swiper-slider .swiper-button-prev:hover,
 .slider-wrapper .custom-swiper-slider .swiper-button-next:hover {
   background: #881337;
