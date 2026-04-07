@@ -18,16 +18,14 @@ const Slider = ({ blok }) => {
           centeredSlides={true}
           modules={[Navigation]}
           navigation
-          spaceBetween={20}
+          spaceBetween={-20}
           slidesPerView={1}
           breakpoints={{
             1024: {
               slidesPerView: 2,
-              spaceBetween: 30,
             },
             1536: {
               slidesPerView: 3,
-              spaceBetween: 40,
             },
           }}
           className="custom-swiper-slider"
