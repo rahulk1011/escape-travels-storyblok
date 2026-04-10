@@ -1,25 +1,25 @@
 import './globals.css';
 import StoryblokProvider from '../components/StoryblokProvider';
 import { getStoryblokApi } from '../lib/storyblok';
-import { Amarante } from 'next/font/google';
 import Header from '../components/global/Header';
 import Footer from '../components/global/Footer';
-import Breadcrumb from "../components/global/Breadcrumb";
+import Breadcrumbs from '../components/global/Breadcrumb';
+import { Amarante, Oregano } from 'next/font/google';
 
-const amarante = Amarante({ subsets: ['latin'], display: 'swap', variable: '--font-amarante', weight: ['400'] });
+const amarante = Amarante({ subsets: ['latin'], display: 'swap', variable: '--font-amarante', weight: '400' });
+const oregano = Oregano({ subsets: ['latin'], display: 'swap', variable: '--font-oregano', weight: '400' });
+const fontVariables = [amarante.variable, oregano.variable].join(' ');
 
 export const metadata = {
   title: 'Escape Travels',
   description: 'Explore India’s vibrant spirit through curated journeys.',
 };
 
-// Accept 'lang' parameter to fetch localized global data
 async function getHeaderData(lang = "default") {
   try {
     const storyblokApi = getStoryblokApi();
     const { data } = await storyblokApi.get('cdn/stories/globals/header', {
       version: process.env.NODE_ENV === "development" ? "draft" : "published",
-      language: lang, // Storyblok handles the translation injection
     });
     return data.story;
   } catch (error) {
@@ -33,7 +33,6 @@ async function getFooterData(lang = "default") {
     const storyblokApi = getStoryblokApi();
     const { data } = await storyblokApi.get('cdn/stories/globals/footer', {
       version: process.env.NODE_ENV === "development" ? "draft" : "published",
-      language: lang,
     });
     return data.story;
   } catch (error) {
@@ -42,27 +41,21 @@ async function getFooterData(lang = "default") {
   }
 }
 
-// Next.js Layouts receive 'params' as a prop
-export default async function RootLayout({ children, params }) {
-  // Await params to get the [lang] dynamic segment
-  const { lang } = await params;
-  const currentLang = lang || 'en';
-  console.log(currentLang);
+export default async function RootLayout({ children }) {
+	const headerData = await getHeaderData();
+  console.log(headerData);
+  const footerData = await getFooterData();
 
-  const headerData = await getHeaderData(currentLang);
-  const footerData = await getFooterData(currentLang);
-
-  return (
-    <html lang={currentLang} className={`${amarante.variable}`}>
-      <body className='bg-white'>
-        <StoryblokProvider>
-          {/* We pass the blok data to the Header/Footer as usual */}
-          {headerData && <Header blok={headerData.content} />}
-          <Breadcrumb />
-          {children}
-          {footerData && <Footer blok={footerData.content} />}
-        </StoryblokProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html lang='en' className={fontVariables}>
+			<body className='bg-white mx-auto max-w-[1920px]'>
+				<StoryblokProvider>
+					{headerData && <Header blok={headerData.content} />}
+          <Breadcrumbs />
+					{children}
+					{footerData && <Footer blok={footerData.content} />}
+				</StoryblokProvider>
+			</body>
+		</html>
+	);
 }
