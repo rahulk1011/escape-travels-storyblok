@@ -3,14 +3,9 @@
 import { useState } from 'react';
 import { storyblokEditable } from "@storyblok/react";
 import Link from 'next/link';
-import { usePathname, useParams } from 'next/navigation';
 
 export default function Header({ blok }) {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname();
-  const params = useParams();
-  
-  const currentLang = params.lang || 'en';
 
   const headerBlok = blok?.block?.find(
     (item) => item.component === "header"
@@ -18,35 +13,23 @@ export default function Header({ blok }) {
 
   if (!headerBlok) return null;
 
-  // Helper to fix Storyblok slugs and handle localization
+  /**
+   * Helper to ensure Storyblok URLs work with Next.js Link
+   */
   const formatLink = (linkObj) => {
-    let slug = linkObj.url?.cached_url || linkObj.url || "";
+    // Storyblok provides the URL in linkObj.url or linkObj.cached_url depending on the field type
+    let slug = linkObj.cached_url || linkObj.url || "";
 
-    // 1. If it's the home page, set to empty string
-    if (slug === "home") slug = "";
+    // 1. Handle the homepage edge case
+    if (slug === "home" || slug === "/") return "/";
 
-    // 2. Remove default language prefix if it exists in the cached_url
-    if (slug.startsWith("en/")) slug = slug.replace("en/", "");
-
-    // 3. Ensure internal links have a leading slash, external links don't
-    const isInternal = !slug.startsWith("http");
-    const baseUrl = isInternal ? (currentLang === "en" ? "/" : `/${currentLang}/`) : "";
+    // 2. Check if it's an external link
+    const isExternal = slug.startsWith("http") || slug.startsWith("mailto:") || slug.startsWith("tel:");
     
-    // Combine base and slug, then clean up double slashes
-    return `${baseUrl}${slug}`.replace(/\/+/g, "/");
-  };
+    if (isExternal) return slug;
 
-  const getTranslatablePath = (targetLang) => {
-    if (!pathname) return "/";
-    const segments = pathname.split('/').filter(Boolean);
-    
-    // Remove current language segment if present
-    if (segments[0] === 'de' || segments[0] === 'en') {
-      segments.shift();
-    }
-    
-    const path = `/${segments.join('/')}`;
-    return targetLang === 'en' ? path : `/de${path}`.replace(/\/+/g, "/");
+    // 3. Ensure internal links start with a single /
+    return `/${slug}`.replace(/\/+/g, "/");
   };
 
   return (
@@ -71,10 +54,8 @@ export default function Header({ blok }) {
             >
               <svg className="w-10 h-10 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isOpen ? (
-                  // The "X" Close Icon
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  // The Left-Aligned Reverse Stagger
                   <>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12h13" />
@@ -86,7 +67,7 @@ export default function Header({ blok }) {
           </div>
 
           <div className="flex justify-center">
-            <Link href={currentLang === 'en' ? '/' : '/de'} onClick={() => setIsOpen(false)}>
+            <Link href="/" onClick={() => setIsOpen(false)}>
               {headerBlok.logo?.filename && (
                 <img 
                   src={headerBlok.logo.filename} 
@@ -94,22 +75,6 @@ export default function Header({ blok }) {
                   className='site-logo h-10 md:h-14 w-auto object-contain' 
                 />
               )}
-            </Link>
-          </div>
-
-          <div className="flex justify-end items-center gap-2 text-xs md:text-sm font-bold">
-            <Link 
-              href={getTranslatablePath('en')}
-              className={`px-3 py-1 rounded-full transition-all ${currentLang === 'en' ? 'bg-orange-500 text-white' : 'text-sky-50 hover:bg-slate-700'}`}
-            >
-              EN
-            </Link>
-            <span className="text-slate-500">|</span>
-            <Link 
-              href={getTranslatablePath('de')}
-              className={`px-3 py-1 rounded-full transition-all ${currentLang === 'de' ? 'bg-orange-500 text-white' : 'text-sky-50 hover:bg-slate-700'}`}
-            >
-              DE
             </Link>
           </div>
         </div>
@@ -124,7 +89,7 @@ export default function Header({ blok }) {
             {headerBlok.links?.map((link) => (
               <Link 
                 key={link._uid} 
-                href={formatLink(link)} 
+                href={formatLink(link.url)} // Using the helper here
                 onClick={() => setIsOpen(false)}
                 className="text-xl font-bold text-sky-50 hover:text-orange-500 transition-colors"
               >

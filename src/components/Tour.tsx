@@ -85,29 +85,43 @@ const Tour = (props: any) => {
       </p>
       
       {/* Slider Section */}
-      <div className="slider-wrapper container py-16 w-full mx-auto px-4">
+      <div className="slider-wrapper container py-2 lg:py-12 w-full mx-auto px-4">
         <Swiper
           loop={true} 
-          modules={[Autoplay, Navigation]}
           centeredSlides={true}
+          modules={[Autoplay, Navigation]}
           navigation
-          spaceBetween={20}
+          spaceBetween={-20}
           slidesPerView={1}
-          autoplay={{ delay: 2000, disableOnInteraction: false, }}
+          autoplay={{ delay: 3000, disableOnInteraction: false, }}
           breakpoints={{
-            1024: { slidesPerView: 2, spaceBetween: 30 },
-            1536: { slidesPerView: 3, spaceBetween: 40 },
+            1024: {
+              slidesPerView: 2,
+            },
+            1536: {
+              slidesPerView: 3,
+            },
           }}
           className="custom-swiper-slider"
         >
           {blok.img_slider?.map((slide: any) => (
             <SwiperSlide key={slide._uid}>
-              <img 
-                className="rounded-lg border-1 border-gray-600"
-                src={slide.image.filename} 
-                alt={slide.image.alt || "Slider Image"} 
-                style={{ width: '100%', height: 'auto' }}
-              />
+              {({ isActive }) => (
+                <div 
+                  className={`transition-transform duration-500 ease-in-out ${
+                    isActive ? "scale-95 lg:scale-110 z-10 opacity-100" : "scale-85 lg:opacity-60"
+                  }`}
+                >
+                  <img 
+                    src={slide.image.filename} 
+                    alt={slide.image.alt || "Slider Image"} 
+                    className="w-full max-h-auto rounded-lg shadow-lg"
+                  />
+                  <p className={`slide-title mt-4 text-center transition-opacity ${isActive ? "opacity-100" : "opacity-0"}`}>
+                    {slide.title}
+                  </p>
+                </div>
+              )}
             </SwiperSlide>
           ))}
         </Swiper>
