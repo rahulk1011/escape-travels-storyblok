@@ -23,7 +23,7 @@ const VideoBanner = ({ blok }) => {
       <div className="absolute inset-0 z-0" style={{ backgroundColor: transparentOverlay }}/>
 
       <div className="container mx-auto relative z-10 text-center text-white px-6">
-        <h2 className="mb-6 text-3xl font-bold md:text-4xl xl:text-5xl">{blok.heading}</h2>
+        <h2 className="mb-6 text-3xl md:text-4xl font-bold">{blok.heading}</h2>
         <p className="text-xl leading-[1.5]">{blok.sub_heading}</p>
       </div>
     </div>

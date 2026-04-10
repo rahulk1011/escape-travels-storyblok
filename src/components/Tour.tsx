@@ -115,7 +115,7 @@ const Tour = (props: any) => {
                   <img 
                     src={slide.image.filename} 
                     alt={slide.image.alt || "Slider Image"} 
-                    className="w-full max-h-auto rounded-lg shadow-lg"
+                    className="w-full max-h-auto rounded-lg shadow-lg border-solid border-2 border-rose-950"
                   />
                   <p className={`slide-title mt-4 text-center transition-opacity ${isActive ? "opacity-100" : "opacity-0"}`}>
                     {slide.title}

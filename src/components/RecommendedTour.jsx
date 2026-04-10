@@ -42,9 +42,8 @@ export const RecommendedTour = (props) => {
       />
       
       <div className="p-8">
-        <div className="flex flex-col md:flex-row gap-2 justify-between text-lg font-bold">
+        <div className="flex flex-col lg:flex-row gap-2 justify-between text-lg font-bold">
           <h3 className="text-white">{props.story.name}</h3>
-          
           <p className="text-white font-normal text-sm md:text-base">
             {/* Translated Static Text */}
             {t.startsFrom}:{' '}
@@ -55,11 +54,9 @@ export const RecommendedTour = (props) => {
             })}
           </p>
         </div>
-
         <p className="text-white uppercase font-bold mt-2 text-sm tracking-wide">
           {content.location}, {t.india}
         </p>
-
         {/* Translated Link Text & Localized Href */}
         <Link 
           className="bg-green-100 px-4 py-2 text-sky-950 max-w-fit rounded-lg font-bold text-base mt-8 block hover:bg-green-400 transition-colors" 

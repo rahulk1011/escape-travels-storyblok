@@ -43,7 +43,6 @@ async function getFooterData(lang = "default") {
 
 export default async function RootLayout({ children }) {
 	const headerData = await getHeaderData();
-  console.log(headerData);
   const footerData = await getFooterData();
 
 	return (
