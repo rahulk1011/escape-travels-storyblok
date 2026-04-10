@@ -8,7 +8,7 @@ const Grid = ({ blok }) => {
 
 	return (
 		<div {...storyblokEditable(blok)} className="grid-main py-16" style={{ backgroundColor: bgColor }}>
-			<div className='container mx-auto w-full px-4'>
+			<div className='container mx-auto w-full px-5'>
 				<h2 className='text-3xl md:text-4xl font-bold' style={{ color: headlineColor }}>{blok.headline}</h2>
 				<div className='grid lg:grid-flow-col auto-cols-fe mt-12 gap-8'>
 					{blok.items.map((nestedBlok) => (

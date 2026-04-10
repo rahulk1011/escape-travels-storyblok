@@ -72,7 +72,7 @@ export default function Header({ blok }) {
                 <img 
                   src={headerBlok.logo.filename} 
                   alt={headerBlok.logo.alt || 'logo'} 
-                  className='site-logo h-10 md:h-14 w-auto object-contain' 
+                  className='site-logo h-10 md:h-14 w-auto object-contain scale-[1.4]' 
                 />
               )}
             </Link>
